@@ -181,19 +181,19 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .subtitle {
-      font-size: 1.3rem;
-      max-width: 700px;
-      margin: 0 auto;
-      color: #d4d4d4;
-      font-weight: 300;
-      line-height: 1.6; /* Reduced from 1.8 */
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px 15px; /* Reduced from 12px 20px */
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+.subtitle {
+  font-size: 1.3rem;
+  max-width: 90%;  /* Changed from fixed 700px to percentage */
+  margin: 0 auto;
+  color: #d4d4d4;
+  font-weight: 300;
+  line-height: 1.6;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px 15px;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
     /* How to use section */
     .how-to-use {
       background: rgba(20, 20, 30, 0.25);
@@ -493,10 +493,10 @@
       #greeting {
         font-size: 2.8rem;
       }
-      .subtitle {
-        font-size: 1.6rem;
-        max-width: 900px;
-      }
+  .subtitle {
+  font-size: 1.6rem;
+  max-width: 95%;  /* Changed from fixed 900px to percentage */
+}
       .prompt-title {
         font-size: 2.2rem;
       }
@@ -534,9 +534,9 @@
         font-size: 2.5rem;
       }
       .subtitle {
-        font-size: 1.5rem;
-        max-width: 800px;
-      }
+  font-size: 1.5rem;
+  max-width: 95%;  /* Changed from fixed 800px to percentage */
+}
       .prompt-title {
         font-size: 2rem;
       }
