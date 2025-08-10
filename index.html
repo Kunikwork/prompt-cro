@@ -194,6 +194,116 @@
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
+    /* How to use section */
+    .how-to-use {
+      background: rgba(20, 20, 30, 0.25);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      animation: slideUp 0.8s ease-out;
+      transition: all 0.4s ease;
+    }
+    .how-to-use:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    .how-to-use-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #f5f5f5;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .how-to-use-title i {
+      color: #8a2be2;
+      font-size: 1.3rem;
+    }
+    .how-to-use-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .step {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(10, 10, 20, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .step-number {
+      background: linear-gradient(45deg, #8a2be2, #ff00ff);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .step-content {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .step-highlight {
+      color: #4a90e2;
+      font-weight: 500;
+    }
+    .ai-model-link {
+      color: #8a2be2;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+    }
+    .ai-model-link:hover {
+      color: #ff00ff;
+    }
+    .ai-model-link:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #8a2be2, #ff00ff);
+      transition: width 0.3s ease;
+    }
+    .ai-model-link:hover:after {
+      width: 100%;
+    }
+    .copy-feedback {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #4CAF50, #2E7D32);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .copy-feedback.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
     /* Prompt container */
     .prompt-container {
       background: rgba(20, 20, 30, 0.25);
@@ -399,6 +509,10 @@
       .audit-table {
         font-size: 0.85rem;
       }
+      
+      .how-to-use-steps {
+        flex-direction: column;
+      }
     }
     @media (max-width: 480px) {
       h1 {
@@ -459,6 +573,29 @@
       <p class="subtitle">Ultimate CRO analysis prompt for comprehensive website conversion rate optimization</p>
     </header>
     
+    <!-- How to use section -->
+    <div class="how-to-use">
+      <h2 class="how-to-use-title"><i class="fas fa-lightbulb"></i> How to Use This Prompt</h2>
+      <div class="how-to-use-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">Copy the prompt using the <span class="step-highlight">Copy Prompt</span> button</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">Run it in a reasoning model (<span id="ai-model" class="ai-model-link"></span>)</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">Enable <span id="ai-mode" class="step-highlight"></span> feature</div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">Paste your website URL and other requested details</div>
+        </div>
+      </div>
+    </div>
+    
     <main>
       <div class="prompt-container">
         <div class="prompt-header">
@@ -471,11 +608,30 @@
       </div>
     </main>
   </div>
+  
+  <!-- Copy feedback notification -->
+  <div id="copy-feedback" class="copy-feedback">
+    <i class="fas fa-check-circle"></i> Copied to clipboard!
+  </div>
+  
   <script>
+    // AI models data
+    const aiModels = [
+      { name: 'Z.ai', mode: 'Auto Think + Web Search', url: 'https://chat.z.ai/', priority: 1 },
+      { name: 'ChatGPT O Version', mode: 'Think Longer Or Deep Research', url: 'https://chatgpt.com/', priority: 1 },
+      { name: 'Perplexity', mode: '', url: 'https://www.perplexity.ai/', priority: 1 },
+      { name: 'Gemini Pro Version', mode: '', url: 'https://gemini.google.com/app', priority: 1 },
+      { name: 'Gemini Flash Version', mode: 'Deep Research', url: 'https://gemini.google.com/app', priority: 2 },
+      { name: 'Claud', mode: 'Extended Thinking', url: 'https://claude.ai/new', priority: 2 },
+      { name: 'DeepSeek', mode: 'DeepThink + Search', url: 'https://chat.deepseek.com/', priority: 2 },
+      { name: 'Qwen', mode: 'Thinking + Search', url: 'https://chat.qwen.ai/', priority: 2 }
+    ];
+    
     // Get query parameter from URL
     function getQueryParam(key) {
       return new URLSearchParams(window.location.search).get(key);
     }
+    
     // Determine greeting by local hour
     function getGreeting(hour) {
       if (hour >= 5 && hour < 12)    return "Good Morning";
@@ -483,6 +639,7 @@
       if (hour >= 17 && hour < 22)   return "Good Evening";
       return "Hello";
     }
+    
     // Typewriter effect
     async function typeWriter(element, text, speed = 120) {
       element.textContent = "";
@@ -491,6 +648,16 @@
         await new Promise(resolve => setTimeout(resolve, speed));
       }
     }
+    
+    // Show copy feedback
+    function showCopyFeedback() {
+      const feedback = document.getElementById('copy-feedback');
+      feedback.classList.add('show');
+      setTimeout(() => {
+        feedback.classList.remove('show');
+      }, 2000);
+    }
+    
     // Format prompt text with CRO content
     function formatPromptText() {
       const promptText = document.getElementById('prompt-text');
@@ -1065,6 +1232,35 @@ When a user provides their website URL:
 <span class="prompt-important">Remember</span>: You're not just analyzing data—you're finding money left on the table and providing actionable solutions to capture it. Every recommendation must have a clear "why" and expected ROI impact.`;
       promptText.innerHTML = content;
     }
+    
+    // Get random AI model based on priority
+    function getRandomAIModel() {
+      // Separate models by priority
+      const priority1 = aiModels.filter(model => model.priority === 1);
+      const priority2 = aiModels.filter(model => model.priority === 2);
+      
+      // Randomly decide whether to pick from priority 1 or 2 (70% chance for priority 1)
+      const usePriority1 = Math.random() < 0.7;
+      const modelsToChooseFrom = usePriority1 ? priority1 : priority2;
+      
+      // Return a random model from the selected priority
+      return modelsToChooseFrom[Math.floor(Math.random() * modelsToChooseFrom.length)];
+    }
+    
+    // Update AI model and mode in the how-to-use section
+    function updateAIModelInfo() {
+      const selectedModel = getRandomAIModel();
+      const aiModelElement = document.getElementById('ai-model');
+      const aiModeElement = document.getElementById('ai-mode');
+      
+      // Update model name and make it clickable
+      aiModelElement.textContent = selectedModel.name;
+      aiModelElement.setAttribute('data-url', selectedModel.url);
+      
+      // Update mode
+      aiModeElement.textContent = selectedModel.mode || 'Deep Research';
+    }
+    
     // Copy button functionality
     function setupCopyButton() {
       const copyButton = document.getElementById('copy-button');
@@ -1108,6 +1304,7 @@ When a user provides their website URL:
           
           // Visual feedback
           copyButton.classList.add('copied');
+          showCopyFeedback();
           setTimeout(() => {
             copyButton.classList.remove('copied');
           }, 2000);
@@ -1117,6 +1314,63 @@ When a user provides their website URL:
         }
       });
     }
+    
+    // Setup AI model link functionality
+    function setupAIModelLink() {
+      const aiModelElement = document.getElementById('ai-model');
+      const promptText = document.getElementById('prompt-text');
+      
+      aiModelElement.addEventListener('click', async () => {
+        try {
+          // Get the URL from data attribute
+          const url = aiModelElement.getAttribute('data-url');
+          
+          // Open the URL in a new tab
+          window.open(url, '_blank');
+          
+          // Copy the prompt text
+          const tables = promptText.querySelectorAll('table');
+          let textToCopy = promptText.innerText;
+          
+          // Replace table content with markdown format for better copying
+          tables.forEach(table => {
+            const rows = table.querySelectorAll('tr');
+            let markdownTable = '';
+            
+            // Process header row
+            if (rows.length > 0) {
+              const headerCells = rows[0].querySelectorAll('th, td');
+              const headerRow = Array.from(headerCells).map(cell => cell.textContent).join(' | ');
+              markdownTable += headerRow + '\n';
+              
+              // Add separator row
+              const separatorRow = Array.from(headerCells).map(() => '---').join(' | ');
+              markdownTable += separatorRow + '\n';
+              
+              // Process data rows
+              for (let i = 1; i < rows.length; i++) {
+                const dataCells = rows[i].querySelectorAll('td');
+                const dataRow = Array.from(dataCells).map(cell => cell.textContent).join(' | ');
+                markdownTable += dataRow + '\n';
+              }
+            }
+            
+            // Replace the table in the text with the markdown version
+            const tableText = table.innerText;
+            textToCopy = textToCopy.replace(tableText, markdownTable.trim());
+          });
+          
+          await navigator.clipboard.writeText(textToCopy);
+          
+          // Show feedback
+          showCopyFeedback();
+        } catch (err) {
+          console.error('Failed to open link or copy text: ', err);
+          alert('Failed to open link or copy text to clipboard');
+        }
+      });
+    }
+    
     // Enhanced IP detection with fallbacks
     async function getTimezone() {
       try {
@@ -1148,9 +1402,17 @@ When a user provides their website URL:
       }
       return Intl.DateTimeFormat().resolvedOptions().timeZone || null;
     }
+    
     document.addEventListener("DOMContentLoaded", async function () {
       formatPromptText();
       setupCopyButton();
+      setupAIModelLink();
+      
+      // Update AI model info
+      updateAIModelInfo();
+      
+      // Refresh AI model info every 10 seconds
+      setInterval(updateAIModelInfo, 10000);
       
       const name = getQueryParam("name");
       const greetingElement = document.getElementById("greeting");
@@ -1192,6 +1454,7 @@ When a user provides their website URL:
       
       document.querySelector(`.${selectedAnimation}`).style.display = 'block';
     });
+    
     // Animated favicon
     const size = 32;
     const canvas = document.createElement('canvas');
