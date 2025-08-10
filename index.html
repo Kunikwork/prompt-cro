@@ -182,18 +182,32 @@
       100% { background-position: 0% 50%; }
     }
     .subtitle {
-      font-size: 1.3rem;
-      max-width: 700px;
-      margin: 0 auto;
-      color: #d4d4d4;
-      font-weight: 300;
-      line-height: 1.6; /* Reduced from 1.8 */
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px 15px; /* Reduced from 12px 20px */
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #d4d4d4;
+  font-weight: 300;
+  line-height: 1.6;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px 15px;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Add this media query to make the subtitle wider on larger screens */
+@media (min-width: 1200px) {
+  .subtitle {
+    max-width: 900px; /* Increased from 700px to utilize more space */
+  }
+}
+
+@media (min-width: 1600px) {
+  .subtitle {
+    max-width: 1000px; /* Even wider for very large screens */
+  }
+}
+    
     /* How to use section */
     .how-to-use {
       background: rgba(20, 20, 30, 0.25);
