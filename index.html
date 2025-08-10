@@ -317,11 +317,15 @@
       position: relative;
       margin-bottom: 30px;
       animation: slideUp 0.8s ease-out;
-      transition: all 0.4s ease;
+      transition: all 0.4s ease, height 0.5s ease, max-height 0.5s ease;
     }
     .prompt-container:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    .prompt-container.expanded {
+      max-height: calc(100vh - 100px) !important;
+      transition: all 0.5s ease;
     }
     .prompt-header {
       display: flex;
@@ -495,7 +499,7 @@
       #prompt-text {
         font-size: 1.2rem;
         padding: 40px;
-        max-height: calc(100vh - 400px); /* Dynamic height based on viewport */
+        max-height: calc(100vh - 500px); /* Reduced height to fit above fold */
       }
       .how-to-use {
         padding: 30px;
@@ -511,7 +515,7 @@
       }
       /* Adjust for larger screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 200px); /* Dynamic height based on viewport */
+        max-height: calc(100vh - 300px); /* Reduced height to fit above fold */
         display: flex;
         flex-direction: column;
       }
@@ -554,7 +558,7 @@
       #prompt-text {
         font-size: 1.1rem;
         padding: 35px;
-        max-height: calc(100vh - 400px); /* Dynamic height based on viewport */
+        max-height: calc(100vh - 500px); /* Reduced height to fit above fold */
       }
       .how-to-use {
         padding: 25px;
@@ -570,7 +574,7 @@
       }
       /* Adjust for medium-large screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 200px); /* Dynamic height based on viewport */
+        max-height: calc(100vh - 300px); /* Reduced height to fit above fold */
         display: flex;
         flex-direction: column;
       }
@@ -731,7 +735,7 @@
     </div>
     
     <main>
-      <div class="prompt-container">
+      <div class="prompt-container" id="prompt-container">
         <div class="prompt-header">
           <h2 class="prompt-title"><i class="fas fa-chart-line"></i> Ultimate CRO Analysis Prompt</h2>
           <button id="copy-button">
@@ -1485,6 +1489,74 @@ When a user provides their website URL:
       });
     }
     
+    // Setup dynamic resizing of prompt container based on scroll
+    function setupDynamicResizing() {
+      const promptContainer = document.getElementById('prompt-container');
+      const promptText = document.getElementById('prompt-text');
+      let isExpanded = false;
+      let scrollTimeout;
+      let lastScrollPosition = 0;
+      let scrollDirection = 'down';
+      
+      // Only apply this functionality on larger screens
+      function isLargeScreen() {
+        return window.innerWidth >= 1200;
+      }
+      
+      // Check if user is scrolling down
+      function checkScrollDirection() {
+        const currentScrollPosition = promptText.scrollTop;
+        
+        if (currentScrollPosition > lastScrollPosition) {
+          scrollDirection = 'down';
+        } else {
+          scrollDirection = 'up';
+        }
+        
+        lastScrollPosition = currentScrollPosition;
+      }
+      
+      // Expand the container when scrolling down
+      function expandContainer() {
+        if (!isExpanded && isLargeScreen()) {
+          promptContainer.classList.add('expanded');
+          isExpanded = true;
+        }
+      }
+      
+      // Collapse the container when scrolling up
+      function collapseContainer() {
+        if (isExpanded && isLargeScreen()) {
+          promptContainer.classList.remove('expanded');
+          isExpanded = false;
+        }
+      }
+      
+      // Handle scroll events
+      promptText.addEventListener('scroll', function() {
+        checkScrollDirection();
+        
+        // Clear any existing timeout
+        clearTimeout(scrollTimeout);
+        
+        // If scrolling down and user has scrolled a bit, expand the container
+        if (scrollDirection === 'down' && promptText.scrollTop > 100) {
+          scrollTimeout = setTimeout(expandContainer, 300);
+        } 
+        // If scrolling up, immediately collapse the container
+        else if (scrollDirection === 'up') {
+          collapseContainer();
+        }
+      });
+      
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        if (!isLargeScreen() && isExpanded) {
+          collapseContainer();
+        }
+      });
+    }
+    
     // Enhanced IP detection with fallbacks
     async function getTimezone() {
       try {
@@ -1521,6 +1593,7 @@ When a user provides their website URL:
       formatPromptText();
       setupCopyButton();
       setupAIModelLink();
+      setupDynamicResizing(); // Setup the dynamic resizing functionality
       
       // Update AI model info
       updateAIModelInfo();
