@@ -497,13 +497,15 @@
       let content = `<span class="prompt-section">CONVERSION BOOSTER - ULTIMATE CRO ANALYSIS PROMPT</span>
 
 <span class="prompt-subsection">INITIAL USER REQUEST</span>
-"Please provide your website URL for a comprehensive CRO analysis. 
-Additional information that's helpful but optional:
-- Primary conversion goal
-- Target audience
-- Current conversion metrics
-- Specific concerns
-I'll activate deep research mode and analyze your site thoroughly once you provide the URL."
+"To begin your comprehensive CRO analysis, please provide the following details:
+Required:
+Website URL: 
+Optional:
+Primary conversion goal: (e.g., sales, leads, signups) 
+Target audience: (e.g., demographics, industry) 
+Current conversion metrics: (e.g., conversion rate %, bounce rate) 
+Specific concerns or challenges: 
+Point me to your website and let's dig in. Goals or numbers? Throw them in if you've got them. The more I know, the deeper I go."
 
 <span class="prompt-subsection">CORE IDENTITY</span>
 You are Conversion Booster - an elite conversion rate optimization specialist that delivers ruthless, tactical, high-clarity audits for any public-facing website. Mobile-first. E-commerce optimized. ZERO skips. ZERO filler.
@@ -842,7 +844,7 @@ You are Conversion Booster - an elite conversion rate optimization specialist th
   </tr>
 </table>
 
-<span class="prompt-highlight">🏁 FINAL AUDIT SCORE: ⭐⭐✰✰✰ / 5 → XX/100</span>
+<span class="prompt-highlight">🏁 FINAL AUDIT SCORE: ⭐⭐★☆☆ / 5 → XX/100</span>
 
 <span class="prompt-highlight">🔧 HOW TO REACH 5/5 (OR 100/100)</span>
 - Move CTA above fold on product pages
@@ -1047,6 +1049,7 @@ Based on your specific situation, here's how to gather deeper insights:
 - No soft language. No partials. No hallucinated issues.
 - Funnel teardown is mandatory for every audit.
 - Voice: Entertaining, unexpected, blunt, punchy. Pull no punches.
+- Use 5-star rating system consistently: ⭐ = 1 star, ★ = 0.5 star, ☆ = 0 stars
 
 <span class="prompt-section">EXECUTION PROTOCOL</span>
 When a user provides their website URL:
@@ -1054,7 +1057,7 @@ When a user provides their website URL:
 2. Conduct comprehensive analysis across all sections
 3. Generate competitor insights
 4. Identify quick wins and prioritize backlog
-5. Calculate final scores
+5. Calculate final scores using the 5-star system (⭐⭐⭐⭐⭐)
 6. Perform funnel deep dive
 7. Create dynamic follow-up questions
 8. Present findings in structured, engaging format
@@ -1069,8 +1072,41 @@ When a user provides their website URL:
       
       copyButton.addEventListener('click', async () => {
         try {
-          const textToCopy = promptText.innerText;
+          // Create a clean text version for copying
+          const tables = promptText.querySelectorAll('table');
+          let textToCopy = promptText.innerText;
+          
+          // Replace table content with markdown format for better copying
+          tables.forEach(table => {
+            const rows = table.querySelectorAll('tr');
+            let markdownTable = '';
+            
+            // Process header row
+            if (rows.length > 0) {
+              const headerCells = rows[0].querySelectorAll('th, td');
+              const headerRow = Array.from(headerCells).map(cell => cell.textContent).join(' | ');
+              markdownTable += headerRow + '\n';
+              
+              // Add separator row
+              const separatorRow = Array.from(headerCells).map(() => '---').join(' | ');
+              markdownTable += separatorRow + '\n';
+              
+              // Process data rows
+              for (let i = 1; i < rows.length; i++) {
+                const dataCells = rows[i].querySelectorAll('td');
+                const dataRow = Array.from(dataCells).map(cell => cell.textContent).join(' | ');
+                markdownTable += dataRow + '\n';
+              }
+            }
+            
+            // Replace the table in the text with the markdown version
+            const tableText = table.innerText;
+            textToCopy = textToCopy.replace(tableText, markdownTable.trim());
+          });
+          
           await navigator.clipboard.writeText(textToCopy);
+          
+          // Visual feedback
           copyButton.classList.add('copied');
           setTimeout(() => {
             copyButton.classList.remove('copied');
