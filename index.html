@@ -17,11 +17,11 @@
       background: linear-gradient(135deg, #1a1c20, #24262b, #1d1f23);
       color: #f5f5f5;
       font-family: 'Poppins', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      line-height: 1.7;
+      line-height: 1.6; /* Reduced line height for better space usage */
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      padding: 20px;
+      padding: 15px; /* Reduced from 20px */
       background-attachment: fixed;
     }
     /* Weather animations */
@@ -93,15 +93,15 @@
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 15px; /* Reduced from 20px */
       position: relative;
       z-index: 10;
     }
     /* Header - Enhanced glass effect */
     header {
       text-align: center;
-      margin-bottom: 15px;
-      padding: 20px 25px;
+      margin-bottom: 12px; /* Reduced from 15px */
+      padding: 15px 20px; /* Reduced from 20px 25px */
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -146,7 +146,7 @@
     }
     h1 {
       font-size: 3.2rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* Reduced from 10px */
       font-weight: 700;
       background: linear-gradient(90deg, #f5f5f5, #d4d4d4);
       -webkit-background-clip: text;
@@ -157,7 +157,7 @@
     }
     #greeting {
       font-size: 2.2rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* Reduced from 10px */
       font-weight: 400;
       color: #d4d4d4;
       min-height: 2.5rem;
@@ -187,9 +187,9 @@
       margin: 0 auto;
       color: #d4d4d4;
       font-weight: 300;
-      line-height: 1.8;
+      line-height: 1.6; /* Reduced from 1.8 */
       background: rgba(0, 0, 0, 0.2);
-      padding: 12px 20px;
+      padding: 10px 15px; /* Reduced from 12px 20px */
       border-radius: 15px;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -198,8 +198,8 @@
     .how-to-use {
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
+      padding: 15px; /* Reduced from 20px */
+      margin-bottom: 12px; /* Reduced from 15px */
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -219,7 +219,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: #f5f5f5;
-      margin-bottom: 15px;
+      margin-bottom: 10px; /* Reduced from 15px */
       display: flex;
       align-items: center;
       gap: 10px;
@@ -231,13 +231,13 @@
     .how-to-use-steps {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 15px;
+      gap: 12px; /* Reduced from 15px */
+      margin-top: 12px; /* Reduced from 15px */
     }
     .step {
       background: rgba(10, 10, 20, 0.3);
       border-radius: 12px;
-      padding: 15px;
+      padding: 12px; /* Reduced from 15px */
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -256,7 +256,7 @@
     }
     .step-content {
       font-size: 0.95rem;
-      line-height: 1.5;
+      line-height: 1.4; /* Reduced from 1.5 */
     }
     .step-highlight {
       color: #4a90e2;
@@ -310,15 +310,15 @@
     .prompt-container {
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
-      padding: 20px;
+      padding: 15px; /* Reduced from 20px */
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 15px; /* Reduced from 20px */
       animation: slideUp 0.8s ease-out;
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      max-height: 450px; /* Increased height for better above-fold fit */
+      max-height: 350px; /* Reduced from 450px */
       display: flex;
       flex-direction: column;
     }
@@ -334,8 +334,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
-      padding-bottom: 15px;
+      margin-bottom: 12px; /* Reduced from 15px */
+      padding-bottom: 12px; /* Reduced from 15px */
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .prompt-title {
@@ -356,7 +356,7 @@
       background-size: 300% 300%;
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 10px 20px; /* Reduced from 12px 24px */
       border-radius: 50px;
       font-size: 1.1rem;
       font-weight: 600;
@@ -398,12 +398,12 @@
     #prompt-text {
       background: rgba(10, 10, 20, 0.3);
       border-radius: 16px;
-      padding: 20px;
-      max-height: 370px; /* Increased height for better above-fold fit */
+      padding: 15px; /* Reduced from 20px */
+      max-height: 280px; /* Reduced from 370px */
       overflow-y: auto;
       font-family: 'Source Code Pro', monospace;
       font-size: 1.05rem;
-      line-height: 1.8;
+      line-height: 1.6; /* Reduced from 1.8 */
       color: #f0f0f0;
       border: 1px solid rgba(255, 255, 255, 0.05);
       white-space: pre-wrap;
@@ -427,15 +427,15 @@
     .prompt-section {
       color: #8a2be2;
       font-weight: 600;
-      margin-top: 20px;
-      margin-bottom: 10px;
+      margin-top: 15px; /* Reduced from 20px */
+      margin-bottom: 8px; /* Reduced from 10px */
       display: block;
     }
     .prompt-subsection {
       color: #ff00ff;
       font-weight: 500;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-top: 12px; /* Reduced from 15px */
+      margin-bottom: 4px; /* Reduced from 5px */
       display: block;
     }
     .prompt-highlight {
@@ -444,9 +444,9 @@
     }
     .prompt-example {
       background: rgba(255, 255, 255, 0.05);
-      padding: 10px 15px;
+      padding: 8px 12px; /* Reduced from 10px 15px */
       border-radius: 8px;
-      margin: 10px 0;
+      margin: 8px 0; /* Reduced from 10px 0 */
       display: block;
       border-left: 3px solid #8a2be2;
     }
@@ -458,13 +458,13 @@
     .audit-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 15px 0;
+      margin: 12px 0; /* Reduced from 15px 0 */
       font-size: 0.95rem;
     }
     
     .audit-table th, .audit-table td {
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px;
+      padding: 8px; /* Reduced from 10px */
       text-align: left;
     }
     
@@ -502,24 +502,24 @@
       }
       #prompt-text {
         font-size: 1.2rem;
-        padding: 20px;
-        max-height: calc(100vh - 250px); /* Dynamic height for better above-fold fit */
+        padding: 15px; /* Reduced from 20px */
+        max-height: calc(100vh - 300px); /* More aggressive reduction */
       }
       .how-to-use {
-        padding: 20px;
+        padding: 15px; /* Reduced from 20px */
       }
       .how-to-use-title {
         font-size: 1.8rem;
       }
       .step {
-        padding: 15px;
+        padding: 12px; /* Reduced from 15px */
       }
       .step-content {
         font-size: 1.1rem;
       }
       /* Adjust for larger screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 180px); /* Dynamic height for better above-fold fit */
+        max-height: calc(100vh - 220px); /* More aggressive reduction */
       }
     }
     
@@ -542,24 +542,24 @@
       }
       #prompt-text {
         font-size: 1.1rem;
-        padding: 20px;
-        max-height: calc(100vh - 250px); /* Dynamic height for better above-fold fit */
+        padding: 15px; /* Reduced from 20px */
+        max-height: calc(100vh - 300px); /* More aggressive reduction */
       }
       .how-to-use {
-        padding: 20px;
+        padding: 15px; /* Reduced from 20px */
       }
       .how-to-use-title {
         font-size: 1.7rem;
       }
       .step {
-        padding: 15px;
+        padding: 12px; /* Reduced from 15px */
       }
       .step-content {
         font-size: 1.05rem;
       }
       /* Adjust for medium-large screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 180px); /* Dynamic height for better above-fold fit */
+        max-height: calc(100vh - 220px); /* More aggressive reduction */
       }
     }
     
@@ -569,10 +569,10 @@
       }
       /* Reset to original sizing for smaller screens */
       .prompt-container {
-        max-height: 500px;
+        max-height: 400px; /* Reduced from 500px */
       }
       #prompt-text {
-        max-height: 400px;
+        max-height: 320px; /* Reduced from 400px */
       }
     }
     
@@ -592,17 +592,17 @@
       }
       
       .prompt-container {
-        padding: 20px;
+        padding: 15px; /* Reduced from 20px */
       }
       
       .prompt-header {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px; /* Reduced from 20px */
         text-align: center;
       }
       
       #prompt-text {
-        padding: 20px;
+        padding: 15px; /* Reduced from 20px */
         font-size: 0.98rem;
       }
       
@@ -620,7 +620,7 @@
       }
       
       .step {
-        padding: 15px;
+        padding: 12px; /* Reduced from 15px */
       }
     }
     
