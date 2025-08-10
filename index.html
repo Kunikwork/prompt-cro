@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conversion Booster</title>
+  <title>Conversion Booster - CRO Analysis Tool</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-   
     /* Base styles */
     * {
       margin: 0;
@@ -130,7 +129,6 @@
       right: 0;
       bottom: 0;
       border-radius: 20px;
-      /* border: 2px solid transparent;*/
       background: linear-gradient(45deg, #8a2be2, #ff00ff, #4a90e2, #8a2be2) border-box;
       -webkit-mask: 
         linear-gradient(#fff 0 0) padding-box, 
@@ -167,7 +165,7 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.5rem; /* Add space between elements */
+      gap: 0.5rem;
     }
     .name-gradient {
       background: linear-gradient(90deg, #8a2be2, #ff00ff, #4a90e2);
@@ -237,7 +235,7 @@
       color: #8a2be2;
       font-size: 1.5rem;
     }
-    /* Copy button - Smoother gradient effect */
+    /* Copy button */
     #copy-button {
       background: linear-gradient(90deg, #8a2be2, #ff00ff, #4a90e2);
       background-size: 300% 300%;
@@ -340,6 +338,34 @@
       color: #ff6b6b;
       font-weight: 600;
     }
+    /* Table styling */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+    
+    .audit-table th, .audit-table td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      text-align: left;
+    }
+    
+    .audit-table th {
+      background-color: rgba(138, 43, 226, 0.2);
+      color: #f0f0f0;
+      font-weight: 600;
+    }
+    
+    .audit-table tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .audit-table tr:hover {
+      background-color: rgba(138, 43, 226, 0.1);
+    }
+    
     /* Responsive design */
     @media (max-width: 768px) {
       h1 {
@@ -369,6 +395,10 @@
         width: 100%;
         justify-content: center;
       }
+      
+      .audit-table {
+        font-size: 0.85rem;
+      }
     }
     @media (max-width: 480px) {
       h1 {
@@ -385,6 +415,11 @@
       
       .prompt-title {
         font-size: 1.5rem;
+      }
+      
+      .audit-table {
+        display: block;
+        overflow-x: auto;
       }
     }
     /* Loader */
@@ -427,7 +462,7 @@
     <main>
       <div class="prompt-container">
         <div class="prompt-header">
-          <h2 class="prompt-title"><i class="fas fa-code"></i> CustomGPT Prompt</h2>
+          <h2 class="prompt-title"><i class="fas fa-chart-line"></i> Ultimate CRO Analysis Prompt</h2>
           <button id="copy-button">
             <i class="fas fa-copy"></i> Copy Prompt
           </button>
@@ -448,16 +483,15 @@
       if (hour >= 17 && hour < 22)   return "Good Evening";
       return "Hello";
     }
-    // Typewriter effect: type text inside an element, one char at a time
+    // Typewriter effect
     async function typeWriter(element, text, speed = 120) {
       element.textContent = "";
       for (let i = 0; i < text.length; i++) {
         element.textContent += text.charAt(i);
-        // Wait before next char
         await new Promise(resolve => setTimeout(resolve, speed));
       }
     }
-    // Format prompt text with styling
+    // Format prompt text with CRO content
     function formatPromptText() {
       const promptText = document.getElementById('prompt-text');
       let content = `<span class="prompt-section">CONVERSION BOOSTER - ULTIMATE CRO ANALYSIS PROMPT</span>
@@ -500,7 +534,19 @@ You are Conversion Booster - an elite conversion rate optimization specialist th
 <span class="prompt-subsection">PHASE 2: COMPREHENSIVE AUDIT FRAMEWORK</span>
 
 <span class="prompt-highlight">AUDIT GRID FORMAT (USE FOR ALL SECTIONS)</span>
-| Section | ⭐ Score | What's There | What's Not Working | How to Fix It | Priority |
+<table class="audit-table">
+  <tr>
+    <th>Section</th>
+    <th>⭐ Score</th>
+    <th>What's There</th>
+    <th>What's Not Working</th>
+    <th>How to Fix It</th>
+    <th>Priority</th>
+  </tr>
+  <tr>
+    <td colspan="6">[Content will be dynamically generated based on analysis]</td>
+  </tr>
+</table>
 
 <span class="prompt-important">VAGUE FIX BLOCKER</span>: Each "How to Fix It" must include:
 - A/B test structure
@@ -681,7 +727,21 @@ You are Conversion Booster - an elite conversion rate optimization specialist th
 <span class="prompt-subsection">PHASE 3: COMPETITIVE ANALYSIS</span>
 
 <span class="prompt-highlight">COMPETITOR SNAPSHOT</span>
-| Competitor | Homepage UX | Product Page UX | Mobile | Speed | Trust Signals | CTA Quality | UX Differentiator Found |
+<table class="audit-table">
+  <tr>
+    <th>Competitor</th>
+    <th>Homepage UX</th>
+    <th>Product Page UX</th>
+    <th>Mobile</th>
+    <th>Speed</th>
+    <th>Trust Signals</th>
+    <th>CTA Quality</th>
+    <th>UX Differentiator Found</th>
+  </tr>
+  <tr>
+    <td colspan="8">[Competitor data will be dynamically generated]</td>
+  </tr>
+</table>
 
 <span class="prompt-highlight">COMPETITIVE ADVANTAGE ANALYSIS</span>
 - Unique value propositions
@@ -719,7 +779,20 @@ You are Conversion Booster - an elite conversion rate optimization specialist th
 - All executable within 2 days
 
 <span class="prompt-highlight">📋 BACKLOG TABLE</span>
-| Page | Issue | Impact ▲ | Effort ▼ | ICE Score | Fix | Est. Uplift % |
+<table class="audit-table">
+  <tr>
+    <th>Page</th>
+    <th>Issue</th>
+    <th>Impact ▲</th>
+    <th>Effort ▼</th>
+    <th>ICE Score</th>
+    <th>Fix</th>
+    <th>Est. Uplift %</th>
+  </tr>
+  <tr>
+    <td colspan="7">[Backlog items will be dynamically generated]</td>
+  </tr>
+</table>
 
 <span class="prompt-highlight">IMPLEMENTATION ROADMAP</span>
 - Short-term priorities (0-30 days)
@@ -738,14 +811,36 @@ You are Conversion Booster - an elite conversion rate optimization specialist th
 <span class="prompt-subsection">PHASE 5: FINAL SCOREBOARD & ACTION PLAN</span>
 
 <span class="prompt-highlight">SECTION SCORES</span>
-| Section | ⭐ Score |
-|---------|---------|
-| Homepage | ⭐⭐⭐⭐ |
-| Product Pages | ⭐⭐⭐ |
-| Checkout | ⭐⭐ |
-| Mobile UX | ⭐⭐⭐ |
-| Trust & Persuasion | ⭐⭐⭐⭐ |
-| Lead Gen | ⭐ |
+<table class="audit-table">
+  <tr>
+    <th>Section</th>
+    <th>⭐ Score</th>
+  </tr>
+  <tr>
+    <td>Homepage</td>
+    <td>⭐⭐⭐⭐</td>
+  </tr>
+  <tr>
+    <td>Product Pages</td>
+    <td>⭐⭐⭐</td>
+  </tr>
+  <tr>
+    <td>Checkout</td>
+    <td>⭐⭐</td>
+  </tr>
+  <tr>
+    <td>Mobile UX</td>
+    <td>⭐⭐⭐</td>
+  </tr>
+  <tr>
+    <td>Trust & Persuasion</td>
+    <td>⭐⭐⭐⭐</td>
+  </tr>
+  <tr>
+    <td>Lead Gen</td>
+    <td>⭐</td>
+  </tr>
+</table>
 
 <span class="prompt-highlight">🏁 FINAL AUDIT SCORE: ⭐⭐✰✰✰ / 5 → XX/100</span>
 
@@ -974,11 +1069,8 @@ When a user provides their website URL:
       
       copyButton.addEventListener('click', async () => {
         try {
-          // Get text without HTML tags
           const textToCopy = promptText.innerText;
           await navigator.clipboard.writeText(textToCopy);
-          
-          // Visual feedback
           copyButton.classList.add('copied');
           setTimeout(() => {
             copyButton.classList.remove('copied');
@@ -992,7 +1084,6 @@ When a user provides their website URL:
     // Enhanced IP detection with fallbacks
     async function getTimezone() {
       try {
-        // Try ipapi.co first (remove extra spaces in URL)
         const res1 = await fetch("https://ipapi.co/json/");
         if (res1.ok) {
           const data = await res1.json();
@@ -1002,7 +1093,6 @@ When a user provides their website URL:
         console.warn("ipapi.co failed:", error);
       }
       try {
-        // Try ipgeolocation.io as backup
         const res2 = await fetch("https://api.ipgeolocation.io/timezone?apiKey=7c860389231d440b852035401018616a");
         if (res2.ok) {
           const data = await res2.json();
@@ -1012,7 +1102,6 @@ When a user provides their website URL:
         console.warn("ipgeolocation.io failed:", error);
       }
       try {
-        // Try ip-api.com as another backup
         const res3 = await fetch("http://ip-api.com/json/?fields=status,message,timezone", { mode: 'cors' });
         if (res3.ok) {
           const data = await res3.json();
@@ -1021,124 +1110,95 @@ When a user provides their website URL:
       } catch (error) {
         console.warn("ip-api.com failed:", error);
       }
-      // Final fallback to browser timezone
       return Intl.DateTimeFormat().resolvedOptions().timeZone || null;
     }
     document.addEventListener("DOMContentLoaded", async function () {
-      // Format the prompt text
       formatPromptText();
-      
-      // Setup copy button
       setupCopyButton();
       
       const name = getQueryParam("name");
       const greetingElement = document.getElementById("greeting");
       
-      // Get timezone with enhanced detection
       let timezone = await getTimezone();
-      
-      // Get hour based on detected timezone or local time
       const now = timezone
         ? new Date(new Date().toLocaleString("en-US", { timeZone: timezone }))
         : new Date();
       
       const greeting = getGreeting(now.getHours());
       
-      // Compose greeting with proper spacing
       if (name) {
-        // Create elements with proper spacing
         const greetingText = document.createElement('span');
         greetingText.textContent = greeting;
         
-        const spacer = document.createTextNode(' '); // Proper space
-        
+        const spacer = document.createTextNode(' ');
         const nameSpan = document.createElement('span');
         nameSpan.className = 'name-gradient';
+        const comma = document.createTextNode(',');
         
-        const comma = document.createTextNode(','); // Comma after name
-        
-        // Clear existing content and append new elements
         greetingElement.innerHTML = '';
         greetingElement.appendChild(greetingText);
         greetingElement.appendChild(spacer);
         greetingElement.appendChild(nameSpan);
         greetingElement.appendChild(comma);
         
-        // Type the name
         await typeWriter(nameSpan, name, 120);
       } else {
-        // No name provided, just show greeting
         greetingElement.innerHTML = "<span class='name-gradient'>" + greeting + "</span>";
       }
       
-      // Show a random weather animation
       const animations = ['weather-rain', 'weather-snow', 'weather-wind', 'weather-sunny'];
       const randomIndex = Math.floor(Math.random() * animations.length);
       const selectedAnimation = animations[randomIndex];
       
-      // Hide all animations first
       document.querySelectorAll('.weather-rain, .weather-snow, .weather-wind, .weather-sunny').forEach(el => {
         el.style.display = 'none';
       });
       
-      // Show the selected animation
       document.querySelector(`.${selectedAnimation}`).style.display = 'block';
     });
-
-
-
-//*--- Animated ✦ favicon gradient script start --- */
-const size = 32;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  function drawFavicon(phase) {
-    ctx.clearRect(0, 0, size, size);
-    // Optionally add a subtle white glow for contrast on dark background
-    ctx.shadowColor = 'rgba(255,255,255,0.6)';
-    ctx.shadowBlur = 3;
-    // Animate smoothly between bright magenta (320deg) and blue (210deg)
-    const t = (Math.sin(phase) + 1) / 2;
-    const startHue = 320, endHue = 210;
-    const hue = startHue * (1 - t) + endHue * t;
-    const nextHue = endHue * t + startHue * (1 - t);
-    // Create radial gradient for smooth color transition
-    const gradient = ctx.createRadialGradient(
-      size / 2, size / 2, 1,
-      size / 2, size / 2, size / 2
-    );
-    gradient.addColorStop(0, `hsl(${hue}, 100%, 70%)`);
-    gradient.addColorStop(1, `hsl(${nextHue}, 90%, 65%)`);
-    ctx.font = '32px serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = gradient;
-    ctx.fillText('✦', size / 2, size / 2 + 2);
-    // Reset shadow for next frame
-    ctx.shadowBlur = 0;
-  }
-  function setFavicon() {
-    const old = document.getElementById('favicon');
-    if (old) old.remove();
-    const link = document.createElement('link');
-    link.id = 'favicon';
-    link.rel = 'icon';
-    link.type = 'image/png';
-    link.href = canvas.toDataURL('image/png');
-    document.head.appendChild(link);
-  }
-  function animate(time) {
-    drawFavicon(time / 3000); // Slower animation speed for smoothness
-    setFavicon();
-    requestAnimationFrame(animate);
-  }
-  animate(0);
-
-//*--- Animated ✦ favicon gradient script end --- */
-
-
-    
+    // Animated favicon
+    const size = 32;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    function drawFavicon(phase) {
+      ctx.clearRect(0, 0, size, size);
+      ctx.shadowColor = 'rgba(255,255,255,0.6)';
+      ctx.shadowBlur = 3;
+      const t = (Math.sin(phase) + 1) / 2;
+      const startHue = 320, endHue = 210;
+      const hue = startHue * (1 - t) + endHue * t;
+      const nextHue = endHue * t + startHue * (1 - t);
+      const gradient = ctx.createRadialGradient(
+        size / 2, size / 2, 1,
+        size / 2, size / 2, size / 2
+      );
+      gradient.addColorStop(0, `hsl(${hue}, 100%, 70%)`);
+      gradient.addColorStop(1, `hsl(${nextHue}, 90%, 65%)`);
+      ctx.font = '32px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = gradient;
+      ctx.fillText('✦', size / 2, size / 2 + 2);
+      ctx.shadowBlur = 0;
+    }
+    function setFavicon() {
+      const old = document.getElementById('favicon');
+      if (old) old.remove();
+      const link = document.createElement('link');
+      link.id = 'favicon';
+      link.rel = 'icon';
+      link.type = 'image/png';
+      link.href = canvas.toDataURL('image/png');
+      document.head.appendChild(link);
+    }
+    function animate(time) {
+      drawFavicon(time / 3000);
+      setFavicon();
+      requestAnimationFrame(animate);
+    }
+    animate(0);
   </script>
 </body>
 </html>
