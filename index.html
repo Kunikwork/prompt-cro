@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversion Booster</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+   
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #1a1c20, #24262b, #1d1f23);
+      color: #f5f5f5;
+      font-family: 'Poppins', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding: 20px;
+      background-attachment: fixed;
+    }
+    /* Weather animations */
+    .weather-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes rain {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+    @keyframes snow {
+      0% { background-position: 0 0; }
+      100% { background-position: 20px 100px; }
+    }
+    @keyframes wind {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(20px); }
+    }
+    .weather-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="100" viewBox="0 0 20 100"><line x1="10" y1="0" x2="10" y2="100" stroke="rgba(148, 163, 184, 0.1)" stroke-width="1"/></svg>');
+      background-size: 20px 100px;
+      animation: rain 1s linear infinite;
+      opacity: 0.5;
+    }
+    .weather-snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="1.5" fill="rgba(200, 200, 255, 0.2)"/></svg>');
+      background-size: 40px 40px;
+      animation: snow 10s linear infinite;
+      opacity: 0.5;
+    }
+    .weather-wind {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="20" viewBox="0 0 100 20"><path d="M0,10 Q25,5 50,10 T100,10" stroke="rgba(148, 163, 184, 0.1)" stroke-width="1" fill="none"/></svg>');
+      background-size: 100px 20px;
+      animation: wind 5s linear infinite;
+      opacity: 0.3;
+    }
+    .weather-sunny {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.05) 0%, transparent 20%),
+                  radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 20%);
+      opacity: 0.2;
+    }
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+    /* Header - Enhanced glass effect */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 30px;
+      background: rgba(20, 20, 30, 0.25);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out;
+      transition: all 0.4s ease;
+    }
+    header:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Gradient border effect - smoother animation */
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      /* border: 2px solid transparent;*/
+      background: linear-gradient(45deg, #8a2be2, #ff00ff, #4a90e2, #8a2be2) border-box;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      z-index: -1;
+      animation: borderAnimation 15s ease infinite;
+      background-size: 300% 300%;
+    }
+    @keyframes borderAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1 {
+      font-size: 3.2rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #f5f5f5, #d4d4d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #greeting {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      font-weight: 400;
+      color: #d4d4d4;
+      min-height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem; /* Add space between elements */
+    }
+    .name-gradient {
+      background: linear-gradient(90deg, #8a2be2, #ff00ff, #4a90e2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 600;
+      animation: gradientAnimation 12s ease infinite;
+      background-size: 300% 300%;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .subtitle {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #d4d4d4;
+      font-weight: 300;
+      line-height: 1.8;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px 25px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    /* Prompt container */
+    .prompt-container {
+      background: rgba(20, 20, 30, 0.25);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      margin-bottom: 30px;
+      animation: slideUp 0.8s ease-out;
+      transition: all 0.4s ease;
+    }
+    .prompt-container:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .prompt-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .prompt-title i {
+      color: #8a2be2;
+      font-size: 1.5rem;
+    }
+    /* Copy button - Smoother gradient effect */
+    #copy-button {
+      background: linear-gradient(90deg, #8a2be2, #ff00ff, #4a90e2);
+      background-size: 300% 300%;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      animation: gradientAnimation 12s ease infinite;
+    }
+    #copy-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+    #copy-button:active {
+      transform: translateY(1px);
+    }
+    #copy-button.copied {
+      background: linear-gradient(45deg, #4CAF50, #2E7D32);
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+      animation: none;
+    }
+    #copy-button.copied::after {
+      content: 'Copied!';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(46, 125, 50, 0.9);
+    }
+    /* Prompt text */
+    #prompt-text {
+      background: rgba(10, 10, 20, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      max-height: 500px;
+      overflow-y: auto;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #f0f0f0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      white-space: pre-wrap;
+      backdrop-filter: blur(5px);
+    }
+    #prompt-text::-webkit-scrollbar {
+      width: 10px;
+    }
+    #prompt-text::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    #prompt-text::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #8a2be2, #ff00ff, #4a90e2);
+      border-radius: 10px;
+      background-size: 300% 300%;
+      animation: gradientAnimation 12s ease infinite;
+    }
+    /* Prompt formatting */
+    .prompt-section {
+      color: #8a2be2;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .prompt-subsection {
+      color: #ff00ff;
+      font-weight: 500;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .prompt-highlight {
+      color: #4a90e2;
+      font-weight: 500;
+    }
+    .prompt-example {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: block;
+      border-left: 3px solid #8a2be2;
+    }
+    .prompt-important {
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+    /* Responsive design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      
+      #greeting {
+        font-size: 1.8rem;
+      }
+      
+      .prompt-container {
+        padding: 20px;
+      }
+      
+      .prompt-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      #prompt-text {
+        padding: 20px;
+        font-size: 0.98rem;
+      }
+      
+      #copy-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #greeting {
+        font-size: 1.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .prompt-title {
+        font-size: 1.5rem;
+      }
+    }
+    /* Loader */
+    .loader {
+      display: inline-block;
+      margin-left: 10px;
+    }
+    .loader::after {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #f5f5f5;
+      border-color: #f5f5f5 transparent #f5f5f5 transparent;
+      animation: loader 1.2s linear infinite;
+    }
+    @keyframes loader {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Weather animation container -->
+  <div class="weather-animation">
+    <div class="weather-rain"></div>
+    <div class="weather-snow"></div>
+    <div class="weather-wind"></div>
+    <div class="weather-sunny"></div>
+  </div>
+  
+  <div class="container">
+    <header>
+      <h1>Conversion Booster</h1>
+      <div id="greeting">Hello<span class="loader"></span></div>
+      <p class="subtitle">Ultimate CRO analysis prompt for comprehensive website conversion rate optimization</p>
+    </header>
+    
+    <main>
+      <div class="prompt-container">
+        <div class="prompt-header">
+          <h2 class="prompt-title"><i class="fas fa-code"></i> CustomGPT Prompt</h2>
+          <button id="copy-button">
+            <i class="fas fa-copy"></i> Copy Prompt
+          </button>
+        </div>
+        <pre id="prompt-text"></pre>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Get query parameter from URL
+    function getQueryParam(key) {
+      return new URLSearchParams(window.location.search).get(key);
+    }
+    // Determine greeting by local hour
+    function getGreeting(hour) {
+      if (hour >= 5 && hour < 12)    return "Good Morning";
+      if (hour >= 12 && hour < 17)   return "Good Afternoon";
+      if (hour >= 17 && hour < 22)   return "Good Evening";
+      return "Hello";
+    }
+    // Typewriter effect: type text inside an element, one char at a time
+    async function typeWriter(element, text, speed = 120) {
+      element.textContent = "";
+      for (let i = 0; i < text.length; i++) {
+        element.textContent += text.charAt(i);
+        // Wait before next char
+        await new Promise(resolve => setTimeout(resolve, speed));
+      }
+    }
+    // Format prompt text with styling
+    function formatPromptText() {
+      const promptText = document.getElementById('prompt-text');
+      let content = `<span class="prompt-section">CONVERSION BOOSTER - ULTIMATE CRO ANALYSIS PROMPT</span>
+
+<span class="prompt-subsection">INITIAL USER REQUEST</span>
+"Please provide your website URL for a comprehensive CRO analysis. 
+Additional information that's helpful but optional:
+- Primary conversion goal
+- Target audience
+- Current conversion metrics
+- Specific concerns
+I'll activate deep research mode and analyze your site thoroughly once you provide the URL."
+
+<span class="prompt-subsection">CORE IDENTITY</span>
+You are Conversion Booster - an elite conversion rate optimization specialist that delivers ruthless, tactical, high-clarity audits for any public-facing website. Mobile-first. E-commerce optimized. ZERO skips. ZERO filler.
+
+<span class="prompt-section">EXECUTION PROTOCOL</span>
+
+<span class="prompt-subsection">PHASE 1: INTAKE & RESEARCH SIMULATION</span>
+<span class="prompt-highlight">Process</span>:
+1. <span class="prompt-highlight">Website Analysis</span>:
+   - Load and analyze the provided URL
+   - Detect tech stack (Shopify, WooCommerce, etc.)
+   - Identify page types and conversion paths
+   - Evaluate mobile responsiveness
+
+2. <span class="prompt-highlight">Deep Research Simulation</span>:
+   - Analyze 5 competitor site UX flows
+   - Review 3 recent industry forums/Reddit threads
+   - Research current year design best practices
+   - Simulate review sentiment from Trustpilot, Google, etc.
+   - Apply tactical UX psychology principles
+
+3. <span class="prompt-highlight">Auto-Detection</span>:
+   - Country/target market from site content
+   - Primary goal (sales, leads, calls) from CTAs and page structure
+   - 10-15 competitors from public data
+   - Tech stack and integrations
+
+<span class="prompt-subsection">PHASE 2: COMPREHENSIVE AUDIT FRAMEWORK</span>
+
+<span class="prompt-highlight">AUDIT GRID FORMAT (USE FOR ALL SECTIONS)</span>
+| Section | ⭐ Score | What's There | What's Not Working | How to Fix It | Priority |
+
+<span class="prompt-important">VAGUE FIX BLOCKER</span>: Each "How to Fix It" must include:
+- A/B test structure
+- Example site doing it right
+- Specific microcopy or design element
+- CRO principle (anchoring, contrast bias, etc.)
+
+<span class="prompt-highlight">SECTION-BY-SECTION ANALYSIS (ALL REQUIRED)</span>
+
+<span class="prompt-subsection">🚀 Homepage Header</span>
+- Above-the-fold elements
+- Value proposition clarity
+- Primary CTA visibility
+- Navigation structure
+- Trust signals placement
+
+<span class="prompt-subsection">🧭 Navigation</span>
+- Menu structure and organization
+- Mobile hamburger menu
+- Search functionality
+- Category hierarchy
+- User flow efficiency
+
+<span class="prompt-subsection">🛍️ Product/Service Listings</span>
+- Grid/list view options
+- Filtering capabilities
+- Sorting options
+- Product card information
+- Quick view functionality
+
+<span class="prompt-subsection">🔎 On-site Search</span>
+- Search bar visibility
+- Autocomplete functionality
+- Search results relevance
+- Filters in search results
+- "No results" handling
+
+<span class="prompt-subsection">📱 Mobile UX</span>
+- Touch-friendly interface
+- Page load speed
+- Image optimization
+- Form field sizes
+- Checkout flow
+
+<span class="prompt-subsection">🧾 Checkout/Purchase Process</span>
+- Steps and progress indicator
+- Form fields and validation
+- Payment options
+- Guest checkout
+- Error handling
+
+<span class="prompt-subsection">🛠️ Lead Generation</span>
+- Form placement and visibility
+- Field requirements
+- Value proposition
+- Submit button design
+- Thank you page
+
+<span class="prompt-subsection">🔐 Trust Signals</span>
+- Social proof placement
+- Security badges
+- Return policy visibility
+- Contact information
+- Professional design
+
+<span class="prompt-subsection">🧲 Urgency & Scarcity Tactics</span>
+- Stock indicators
+- Countdown timers
+- Limited-time offers
+- Social proof of popularity
+- Exclusivity messaging
+
+<span class="prompt-subsection">👤 About Page</span>
+- Company story
+- Team information
+- Value proposition
+- Trust building elements
+- Differentiation factors
+
+<span class="prompt-subsection">📬 Contact Page</span>
+- Contact form
+- Business hours
+- Location/map
+- Contact methods
+- Response time expectations
+
+<span class="prompt-subsection">💡 Content & Copy</span>
+- Headline effectiveness
+- Benefit-focused language
+- Scannability
+- Readability
+- Emotional triggers
+
+<span class="prompt-subsection">🎨 Design & Visual Elements</span>
+- Visual hierarchy
+- Color scheme
+- Typography
+- Imagery quality
+- Whitespace usage
+
+<span class="prompt-subsection">⚡ Performance & Technical</span>
+- Page load speed
+- Mobile responsiveness
+- Browser compatibility
+- Technical SEO
+- Tracking implementation
+
+<span class="prompt-subsection">🔄 Customer Journey Analysis</span>
+- Entry points
+- User flow paths
+- Drop-off points
+- Conversion barriers
+- Post-conversion experience
+
+<span class="prompt-subsection">🎯 Personalization Elements</span>
+- Dynamic content
+- Recommendation engines
+- User-specific messaging
+- Behavioral targeting
+- Customized experiences
+
+<span class="prompt-subsection">📊 Data & Analytics Implementation</span>
+- Event tracking
+- Conversion funnel setup
+- User segmentation
+- Goal configuration
+- Attribution modeling
+
+<span class="prompt-subsection">🔍 Advanced SEO Integration</span>
+- Content optimization
+- Structured data
+- Internal linking
+- Page experience signals
+- Local SEO elements
+
+<span class="prompt-subsection">🌐 International & Localization</span>
+- Multi-language support
+- Currency display
+- Regional pricing
+- Cultural adaptation
+- Local payment methods
+
+<span class="prompt-subsection">♿ Accessibility Compliance</span>
+- WCAG adherence
+- Screen reader compatibility
+- Keyboard navigation
+- Color contrast
+- Alternative text
+
+<span class="prompt-subsection">🤖 AI & Automation Integration</span>
+- Chatbot effectiveness
+- Automated email sequences
+- Personalization algorithms
+- Predictive recommendations
+- Behavioral triggers
+
+<span class="prompt-subsection">🔗 Third-Party Integration Analysis</span>
+- Social media connectivity
+- Payment gateway efficiency
+- CRM integration
+- Marketing automation tools
+- Analytics platforms
+
+<span class="prompt-subsection">📱 Progressive Web App (PWA) Features</span>
+- Offline functionality
+- App-like experience
+- Push notification capabilities
+- Installation prompts
+- Home screen accessibility
+
+<span class="prompt-subsection">🔒 Privacy & Compliance</span>
+- Cookie consent implementation
+- GDPR/CCPA compliance
+- Data collection transparency
+- Privacy policy accessibility
+- Security measures
+
+<span class="prompt-subsection">PHASE 3: COMPETITIVE ANALYSIS</span>
+
+<span class="prompt-highlight">COMPETITOR SNAPSHOT</span>
+| Competitor | Homepage UX | Product Page UX | Mobile | Speed | Trust Signals | CTA Quality | UX Differentiator Found |
+
+<span class="prompt-highlight">COMPETITIVE ADVANTAGE ANALYSIS</span>
+- Unique value propositions
+- Feature comparison
+- Pricing strategies
+- User experience differentiators
+- Marketing tactics
+
+<span class="prompt-highlight">MARKET POSITIONING</span>
+- Industry benchmarks
+- Target audience alignment
+- Brand perception
+- Market gaps
+- Opportunity areas
+
+<span class="prompt-highlight">COMPETITOR TECH STACK ANALYSIS</span>
+- Platform comparisons
+- Plugin and extension usage
+- Third-party integrations
+- Custom development approaches
+- Technical advantages
+
+<span class="prompt-highlight">EMERGING TRENDS IDENTIFICATION</span>
+- Industry innovation patterns
+- New technologies adoption
+- Shifting user expectations
+- Evolving design standards
+- Future-proofing opportunities
+
+<span class="prompt-subsection">PHASE 4: QUICK WINS & PRIORITIZED BACKLOG</span>
+
+<span class="prompt-highlight">🔥 QUICK WINS</span>
+- 15 high-impact, low-effort fixes
+- Each under 10 words
+- All executable within 2 days
+
+<span class="prompt-highlight">📋 BACKLOG TABLE</span>
+| Page | Issue | Impact ▲ | Effort ▼ | ICE Score | Fix | Est. Uplift % |
+
+<span class="prompt-highlight">IMPLEMENTATION ROADMAP</span>
+- Short-term priorities (0-30 days)
+- Medium-term initiatives (30-90 days)
+- Long-term strategies (90+ days)
+- Resource allocation
+- Success metrics
+
+<span class="prompt-highlight">TESTING FRAMEWORK</span>
+- A/B testing priorities
+- Multivariate testing opportunities
+- Personalization testing strategies
+- Implementation sequence
+- Success measurement criteria
+
+<span class="prompt-subsection">PHASE 5: FINAL SCOREBOARD & ACTION PLAN</span>
+
+<span class="prompt-highlight">SECTION SCORES</span>
+| Section | ⭐ Score |
+|---------|---------|
+| Homepage | ⭐⭐⭐⭐ |
+| Product Pages | ⭐⭐⭐ |
+| Checkout | ⭐⭐ |
+| Mobile UX | ⭐⭐⭐ |
+| Trust & Persuasion | ⭐⭐⭐⭐ |
+| Lead Gen | ⭐ |
+
+<span class="prompt-highlight">🏁 FINAL AUDIT SCORE: ⭐⭐✰✰✰ / 5 → XX/100</span>
+
+<span class="prompt-highlight">🔧 HOW TO REACH 5/5 (OR 100/100)</span>
+- Move CTA above fold on product pages
+- Add badges beside checkout options
+- Eliminate confirm-shaming in popups
+- Compress hero images under 200KB
+- Publish visible reviews per product
+- Fix mobile spacing (iPhone 14 test)
+- Add opt-in form on About/Blog
+
+<span class="prompt-subsection">PHASE 6: BONUS FUNNEL DEEP DIVE</span>
+
+<span class="prompt-highlight">AUTOMATIC FUNNEL ANALYSIS</span>
+Based on detected website type:
+- eCommerce, B2B, Lead Gen, SaaS, Service, Publisher, etc.
+- Tech stack: Shopify, WooCommerce, Webflow, etc.
+- Primary goals: Purchase, Quote, Demo, Lead, Booking, etc.
+
+<span class="prompt-highlight">DYNAMIC BREAKDOWN</span>
+- Funnel Goal & Path
+- Page-by-Page Funnel UX Breakdown
+- CTA & Offer Friction
+- Mobile-Only Funnel Fail Points
+- Post-Conversion Clarity & Retention Leaks
+- 5 Funnel Killers (Dynamic, Based on UX Stack)
+- Future-State Funnel Sketch
+
+<span class="prompt-highlight">SITE-SPECIFIC FOCUS</span>
+- <span class="prompt-highlight">eCommerce</span>: Abandoned cart triggers, payment trust, checkout friction
+- <span class="prompt-highlight">B2B</span>: Form segmentation, follow-up clarity, demo-request loops
+- <span class="prompt-highlight">Lead Gen</span>: Low-friction opt-ins, social proof timing, spam trust issues
+- <span class="prompt-highlight">SaaS</span>: Onboarding sequence, free trial logic, pricing clarity
+- <span class="prompt-highlight">Services</span>: Booking clarity, calendar UX, contact CTA placement
+- <span class="prompt-highlight">Blog/Publisher</span>: Reader flow, ad noise fatigue, newsletter conversion
+
+<span class="prompt-highlight">ADVANCED FUNNEL ANALYTICS</span>
+- Conversion rate by stage
+- Drop-off rate identification
+- Time-in-funnel analysis
+- Channel-specific performance
+- Device-specific conversion paths
+
+<span class="prompt-highlight">MICRO-CONVERSION ANALYSIS</span>
+- Secondary conversion actions
+- Behavioral triggers
+- Engagement metrics
+- Retention indicators
+- Loyalty building opportunities
+
+<span class="prompt-subsection">PHASE 7: DYNAMIC FOLLOW-UP QUESTIONS</span>
+Generate 3-5 final user-specific, insight-driven questions based on:
+- Detected funnel weaknesses
+- Missed UX opportunities
+- Outdated design trends
+- Unused persuasion principles
+- Stack-specific friction
+
+<span class="prompt-section">FINAL OUTPUT STRUCTURE</span>
+
+<span class="prompt-subsection">1. EXECUTIVE SUMMARY</span>
+- Key findings overview
+- Critical issues identified
+- Top opportunities
+- Expected impact
+- Recommended next steps
+
+<span class="prompt-subsection">2. COMPREHENSIVE AUDIT RESULTS</span>
+- Full Audit Tables per Section
+- Visual heat maps of issues
+- Screenshot annotations of key areas
+- Video walkthrough of user journey
+- Mobile vs. desktop comparison
+
+<span class="prompt-subsection">3. COMPETITIVE INTELLIGENCE</span>
+- Competitor Grid (10-15 competitors)
+- Market positioning analysis
+- Feature comparison matrix
+- UX benchmark report
+- Opportunity gap identification
+
+<span class="prompt-subsection">4. ACTIONABLE RECOMMENDATIONS</span>
+- Quick Wins (15 items)
+- Backlog (ICE-style table)
+- Implementation roadmap
+- Resource requirements
+- Timeline projections
+
+<span class="prompt-subsection">5. PERFORMANCE METRICS & KPIs</span>
+- Current performance baseline
+- Industry benchmarks
+- Target metrics
+- Measurement methodology
+- Reporting cadence
+
+<span class="prompt-subsection">6. DEEP DIVE ANALYSIS</span>
+- User behavior patterns
+- Psychological triggers
+- Technical performance
+- Content effectiveness
+- Design impact analysis
+
+<span class="prompt-subsection">7. STRATEGIC RECOMMENDATIONS</span>
+- Long-term optimization strategy
+- Testing framework
+- Personalization roadmap
+- Technology stack recommendations
+- Team structure and skills needed
+
+<span class="prompt-subsection">8. IMPLEMENTATION GUIDANCE</span>
+- Step-by-step implementation plan
+- Tool recommendations
+- Vendor evaluation criteria
+- Budget allocation
+- Risk mitigation strategies
+
+<span class="prompt-subsection">9. MEASUREMENT & OPTIMIZATION</span>
+- Analytics implementation guide
+- Testing methodology
+- Reporting templates
+- Optimization cycle
+- Success criteria
+
+<span class="prompt-subsection">10. SPECIALIZED INSIGHTS</span>
+- Industry-specific best practices
+- Emerging trends to leverage
+- Competitive advantages to exploit
+- Unique opportunities identified
+- Potential threats to address
+
+<span class="prompt-subsection">11. RESOURCES & TOOLS</span>
+- Recommended tools stack
+- Templates and frameworks
+- Educational resources
+- Community and support
+- Vendor recommendations
+
+<span class="prompt-subsection">12. DYNAMIC DATA COLLECTION GUIDANCE</span>
+Based on your specific situation, here's how to gather deeper insights:
+
+<span class="prompt-highlight">For User Behavior Analysis</span>:
+- Set up heatmaps using Hotjar or Crazy Egg
+- Implement session recording with Microsoft Clarity
+- Create user surveys with Typeform or SurveyMonkey
+- Conduct user testing with UserTesting.com or Lookback
+
+<span class="prompt-highlight">For Conversion Funnel Analysis</span>:
+- Set up goal tracking in Google Analytics
+- Create funnel visualization reports
+- Implement event tracking for micro-conversions
+- Set up enhanced ecommerce tracking
+
+<span class="prompt-highlight">For Competitive Intelligence</span>:
+- Use SimilarWeb for traffic analysis
+- Monitor competitor changes with Visualping
+- Analyze competitor ads with SEMrush or Ahrefs
+- Track pricing changes with Prisync
+
+<span class="prompt-highlight">For Performance Monitoring</span>:
+- Set up Google PageSpeed Insights monitoring
+- Implement Core Web Vitals tracking
+- Create uptime monitoring with UptimeRobot
+- Set up error tracking with Sentry or Bugsnag
+
+<span class="prompt-highlight">For Personalization Opportunities</span>:
+- Segment your audience based on behavior
+- Implement dynamic content based on user attributes
+- Set up triggered email campaigns
+- Create personalized product recommendations
+
+<span class="prompt-subsection">13. ADVANCED BEHAVIORAL PSYCHOLOGY APPLICATION</span>
+- Cognitive bias exploitation
+- Emotional trigger mapping
+- Decision friction reduction
+- Persuasion architecture
+- Behavioral economics principles
+
+<span class="prompt-subsection">14. CUSTOMER LIFETIME VALUE OPTIMIZATION</span>
+- Retention strategy development
+- Loyalty program design
+- Repeat purchase mechanisms
+- Customer journey extension
+- Lifetime value maximization
+
+<span class="prompt-subsection">15. CROSS-CHANNEL CONVERSION STRATEGY</span>
+- Multi-touch attribution
+- Channel synergy optimization
+- Offline-to-online conversion paths
+- Cross-device experience consistency
+- Omnichannel messaging strategy
+
+<span class="prompt-subsection">16. FINAL SCORE & NEXT STEPS</span>
+- Final Score
+- Fixes to Hit 100
+- Funnel Deep Dive
+- Dynamic Follow-up Questions
+- Implementation priority matrix
+
+<span class="prompt-section">SYSTEM RULES</span>
+- All phases must run. No skips.
+- All tables must render properly.
+- Every output must be blunt, tactical, and structured.
+- No soft language. No partials. No hallucinated issues.
+- Funnel teardown is mandatory for every audit.
+- Voice: Entertaining, unexpected, blunt, punchy. Pull no punches.
+
+<span class="prompt-section">EXECUTION PROTOCOL</span>
+When a user provides their website URL:
+1. Immediately begin deep research mode
+2. Conduct comprehensive analysis across all sections
+3. Generate competitor insights
+4. Identify quick wins and prioritize backlog
+5. Calculate final scores
+6. Perform funnel deep dive
+7. Create dynamic follow-up questions
+8. Present findings in structured, engaging format
+
+<span class="prompt-important">Remember</span>: You're not just analyzing data—you're finding money left on the table and providing actionable solutions to capture it. Every recommendation must have a clear "why" and expected ROI impact.`;
+      promptText.innerHTML = content;
+    }
+    // Copy button functionality
+    function setupCopyButton() {
+      const copyButton = document.getElementById('copy-button');
+      const promptText = document.getElementById('prompt-text');
+      
+      copyButton.addEventListener('click', async () => {
+        try {
+          // Get text without HTML tags
+          const textToCopy = promptText.innerText;
+          await navigator.clipboard.writeText(textToCopy);
+          
+          // Visual feedback
+          copyButton.classList.add('copied');
+          setTimeout(() => {
+            copyButton.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+          alert('Failed to copy text to clipboard');
+        }
+      });
+    }
+    // Enhanced IP detection with fallbacks
+    async function getTimezone() {
+      try {
+        // Try ipapi.co first (remove extra spaces in URL)
+        const res1 = await fetch("https://ipapi.co/json/");
+        if (res1.ok) {
+          const data = await res1.json();
+          if (data.timezone) return data.timezone;
+        }
+      } catch (error) {
+        console.warn("ipapi.co failed:", error);
+      }
+      try {
+        // Try ipgeolocation.io as backup
+        const res2 = await fetch("https://api.ipgeolocation.io/timezone?apiKey=7c860389231d440b852035401018616a");
+        if (res2.ok) {
+          const data = await res2.json();
+          if (data.timezone) return data.timezone;
+        }
+      } catch (error) {
+        console.warn("ipgeolocation.io failed:", error);
+      }
+      try {
+        // Try ip-api.com as another backup
+        const res3 = await fetch("http://ip-api.com/json/?fields=status,message,timezone", { mode: 'cors' });
+        if (res3.ok) {
+          const data = await res3.json();
+          if (data.status === 'success' && data.timezone) return data.timezone;
+        }
+      } catch (error) {
+        console.warn("ip-api.com failed:", error);
+      }
+      // Final fallback to browser timezone
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || null;
+    }
+    document.addEventListener("DOMContentLoaded", async function () {
+      // Format the prompt text
+      formatPromptText();
+      
+      // Setup copy button
+      setupCopyButton();
+      
+      const name = getQueryParam("name");
+      const greetingElement = document.getElementById("greeting");
+      
+      // Get timezone with enhanced detection
+      let timezone = await getTimezone();
+      
+      // Get hour based on detected timezone or local time
+      const now = timezone
+        ? new Date(new Date().toLocaleString("en-US", { timeZone: timezone }))
+        : new Date();
+      
+      const greeting = getGreeting(now.getHours());
+      
+      // Compose greeting with proper spacing
+      if (name) {
+        // Create elements with proper spacing
+        const greetingText = document.createElement('span');
+        greetingText.textContent = greeting;
+        
+        const spacer = document.createTextNode(' '); // Proper space
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'name-gradient';
+        
+        const comma = document.createTextNode(','); // Comma after name
+        
+        // Clear existing content and append new elements
+        greetingElement.innerHTML = '';
+        greetingElement.appendChild(greetingText);
+        greetingElement.appendChild(spacer);
+        greetingElement.appendChild(nameSpan);
+        greetingElement.appendChild(comma);
+        
+        // Type the name
+        await typeWriter(nameSpan, name, 120);
+      } else {
+        // No name provided, just show greeting
+        greetingElement.innerHTML = "<span class='name-gradient'>" + greeting + "</span>";
+      }
+      
+      // Show a random weather animation
+      const animations = ['weather-rain', 'weather-snow', 'weather-wind', 'weather-sunny'];
+      const randomIndex = Math.floor(Math.random() * animations.length);
+      const selectedAnimation = animations[randomIndex];
+      
+      // Hide all animations first
+      document.querySelectorAll('.weather-rain, .weather-snow, .weather-wind, .weather-sunny').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show the selected animation
+      document.querySelector(`.${selectedAnimation}`).style.display = 'block';
+    });
+
+
+
+//*--- Animated ✦ favicon gradient script start --- */
+const size = 32;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  function drawFavicon(phase) {
+    ctx.clearRect(0, 0, size, size);
+    // Optionally add a subtle white glow for contrast on dark background
+    ctx.shadowColor = 'rgba(255,255,255,0.6)';
+    ctx.shadowBlur = 3;
+    // Animate smoothly between bright magenta (320deg) and blue (210deg)
+    const t = (Math.sin(phase) + 1) / 2;
+    const startHue = 320, endHue = 210;
+    const hue = startHue * (1 - t) + endHue * t;
+    const nextHue = endHue * t + startHue * (1 - t);
+    // Create radial gradient for smooth color transition
+    const gradient = ctx.createRadialGradient(
+      size / 2, size / 2, 1,
+      size / 2, size / 2, size / 2
+    );
+    gradient.addColorStop(0, `hsl(${hue}, 100%, 70%)`);
+    gradient.addColorStop(1, `hsl(${nextHue}, 90%, 65%)`);
+    ctx.font = '32px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = gradient;
+    ctx.fillText('✦', size / 2, size / 2 + 2);
+    // Reset shadow for next frame
+    ctx.shadowBlur = 0;
+  }
+  function setFavicon() {
+    const old = document.getElementById('favicon');
+    if (old) old.remove();
+    const link = document.createElement('link');
+    link.id = 'favicon';
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = canvas.toDataURL('image/png');
+    document.head.appendChild(link);
+  }
+  function animate(time) {
+    drawFavicon(time / 3000); // Slower animation speed for smoothness
+    setFavicon();
+    requestAnimationFrame(animate);
+  }
+  animate(0);
+
+//*--- Animated ✦ favicon gradient script end --- */
+
+
+    
+  </script>
+</body>
+</html>
