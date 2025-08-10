@@ -91,7 +91,7 @@
     }
     /* Container */
     .container {
-      max-width: 1000px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 20px;
       position: relative;
@@ -477,6 +477,33 @@
     }
     
     /* Responsive design */
+    @media (min-width: 1600px) {
+      .container {
+        max-width: 1600px;
+      }
+      h1 {
+        font-size: 3.5rem;
+      }
+      #greeting {
+        font-size: 2.5rem;
+      }
+      .subtitle {
+        font-size: 1.5rem;
+      }
+      .prompt-title {
+        font-size: 2rem;
+      }
+      #prompt-text {
+        font-size: 1.1rem;
+      }
+    }
+    
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 1100px;
+      }
+    }
+    
     @media (max-width: 768px) {
       h1 {
         font-size: 2.4rem;
@@ -514,6 +541,7 @@
         flex-direction: column;
       }
     }
+    
     @media (max-width: 480px) {
       h1 {
         font-size: 2rem;
@@ -536,6 +564,7 @@
         overflow-x: auto;
       }
     }
+    
     /* Loader */
     .loader {
       display: inline-block;
@@ -1325,10 +1354,7 @@ When a user provides their website URL:
           // Get the URL from data attribute
           const url = aiModelElement.getAttribute('data-url');
           
-          // Open the URL in a new tab
-          window.open(url, '_blank');
-          
-          // Copy the prompt text
+          // Copy the prompt text first
           const tables = promptText.querySelectorAll('table');
           let textToCopy = promptText.innerText;
           
@@ -1364,6 +1390,12 @@ When a user provides their website URL:
           
           // Show feedback
           showCopyFeedback();
+          
+          // Open the URL in a background tab
+          const newTab = window.open();
+          newTab.location.href = url;
+          newTab.blur();
+          window.focus();
         } catch (err) {
           console.error('Failed to open link or copy text: ', err);
           alert('Failed to open link or copy text to clipboard');
