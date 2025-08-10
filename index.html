@@ -100,8 +100,8 @@
     /* Header - Enhanced glass effect */
     header {
       text-align: center;
-      margin-bottom: 30px;
-      padding: 30px 30px;
+      margin-bottom: 15px;
+      padding: 20px 25px;
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -146,7 +146,7 @@
     }
     h1 {
       font-size: 3.2rem;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-weight: 700;
       background: linear-gradient(90deg, #f5f5f5, #d4d4d4);
       -webkit-background-clip: text;
@@ -157,7 +157,7 @@
     }
     #greeting {
       font-size: 2.2rem;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-weight: 400;
       color: #d4d4d4;
       min-height: 2.5rem;
@@ -189,7 +189,7 @@
       font-weight: 300;
       line-height: 1.8;
       background: rgba(0, 0, 0, 0.2);
-      padding: 15px 25px;
+      padding: 12px 20px;
       border-radius: 15px;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -198,8 +198,8 @@
     .how-to-use {
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 30px;
+      padding: 20px;
+      margin-bottom: 15px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -232,7 +232,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 15px;
-      margin-top: 20px;
+      margin-top: 15px;
     }
     .step {
       background: rgba(10, 10, 20, 0.3);
@@ -310,14 +310,17 @@
     .prompt-container {
       background: rgba(20, 20, 30, 0.25);
       border-radius: 20px;
-      padding: 30px;
+      padding: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       animation: slideUp 0.8s ease-out;
-      transition: all 0.4s ease, height 0.5s ease, max-height 0.5s ease;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 450px; /* Increased height for better above-fold fit */
+      display: flex;
+      flex-direction: column;
     }
     .prompt-container:hover {
       transform: translateY(-3px);
@@ -325,14 +328,14 @@
     }
     .prompt-container.expanded {
       max-height: calc(100vh - 100px) !important;
-      transition: all 0.5s ease;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .prompt-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
-      padding-bottom: 20px;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .prompt-title {
@@ -353,7 +356,7 @@
       background-size: 300% 300%;
       color: white;
       border: none;
-      padding: 14px 28px;
+      padding: 12px 24px;
       border-radius: 50px;
       font-size: 1.1rem;
       font-weight: 600;
@@ -395,8 +398,8 @@
     #prompt-text {
       background: rgba(10, 10, 20, 0.3);
       border-radius: 16px;
-      padding: 30px;
-      max-height: 500px;
+      padding: 20px;
+      max-height: 370px; /* Increased height for better above-fold fit */
       overflow-y: auto;
       font-family: 'Source Code Pro', monospace;
       font-size: 1.05rem;
@@ -405,6 +408,7 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
       white-space: pre-wrap;
       backdrop-filter: blur(5px);
+      flex: 1;
     }
     #prompt-text::-webkit-scrollbar {
       width: 10px;
@@ -498,43 +502,24 @@
       }
       #prompt-text {
         font-size: 1.2rem;
-        padding: 40px;
-        max-height: calc(100vh - 500px); /* Reduced height to fit above fold */
+        padding: 20px;
+        max-height: calc(100vh - 250px); /* Dynamic height for better above-fold fit */
       }
       .how-to-use {
-        padding: 30px;
+        padding: 20px;
       }
       .how-to-use-title {
         font-size: 1.8rem;
       }
       .step {
-        padding: 20px;
+        padding: 15px;
       }
       .step-content {
         font-size: 1.1rem;
       }
       /* Adjust for larger screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 300px); /* Reduced height to fit above fold */
-        display: flex;
-        flex-direction: column;
-      }
-      #prompt-text {
-        flex: 1;
-        overflow-y: auto;
-      }
-      /* Reduce padding and margins to fit more content above fold */
-      header {
-        margin-bottom: 20px;
-        padding: 25px 30px;
-      }
-      .how-to-use {
-        margin-bottom: 20px;
-        padding: 20px;
-      }
-      .prompt-container {
-        margin-bottom: 20px;
-        padding: 20px;
+        max-height: calc(100vh - 180px); /* Dynamic height for better above-fold fit */
       }
     }
     
@@ -557,49 +542,37 @@
       }
       #prompt-text {
         font-size: 1.1rem;
-        padding: 35px;
-        max-height: calc(100vh - 500px); /* Reduced height to fit above fold */
+        padding: 20px;
+        max-height: calc(100vh - 250px); /* Dynamic height for better above-fold fit */
       }
       .how-to-use {
-        padding: 25px;
+        padding: 20px;
       }
       .how-to-use-title {
         font-size: 1.7rem;
       }
       .step {
-        padding: 18px;
+        padding: 15px;
       }
       .step-content {
         font-size: 1.05rem;
       }
       /* Adjust for medium-large screens to show content above fold */
       .prompt-container {
-        max-height: calc(100vh - 300px); /* Reduced height to fit above fold */
-        display: flex;
-        flex-direction: column;
-      }
-      #prompt-text {
-        flex: 1;
-        overflow-y: auto;
-      }
-      /* Reduce padding and margins to fit more content above fold */
-      header {
-        margin-bottom: 25px;
-        padding: 28px 30px;
-      }
-      .how-to-use {
-        margin-bottom: 25px;
-        padding: 22px;
-      }
-      .prompt-container {
-        margin-bottom: 25px;
-        padding: 25px;
+        max-height: calc(100vh - 180px); /* Dynamic height for better above-fold fit */
       }
     }
     
     @media (max-width: 1199px) {
       .container {
         max-width: 1100px;
+      }
+      /* Reset to original sizing for smaller screens */
+      .prompt-container {
+        max-height: 500px;
+      }
+      #prompt-text {
+        max-height: 400px;
       }
     }
     
@@ -1497,10 +1470,18 @@ When a user provides their website URL:
       let scrollTimeout;
       let lastScrollPosition = 0;
       let scrollDirection = 'down';
+      let originalMaxHeight;
       
       // Only apply this functionality on larger screens
       function isLargeScreen() {
         return window.innerWidth >= 1200;
+      }
+      
+      // Store original max height
+      function storeOriginalHeight() {
+        if (isLargeScreen()) {
+          originalMaxHeight = window.getComputedStyle(promptContainer).maxHeight;
+        }
       }
       
       // Check if user is scrolling down
@@ -1532,16 +1513,18 @@ When a user provides their website URL:
         }
       }
       
-      // Handle scroll events
+      // Handle scroll events with more aggressive detection
       promptText.addEventListener('scroll', function() {
+        if (!isLargeScreen()) return;
+        
         checkScrollDirection();
         
         // Clear any existing timeout
         clearTimeout(scrollTimeout);
         
         // If scrolling down and user has scrolled a bit, expand the container
-        if (scrollDirection === 'down' && promptText.scrollTop > 100) {
-          scrollTimeout = setTimeout(expandContainer, 300);
+        if (scrollDirection === 'down' && promptText.scrollTop > 50) {
+          scrollTimeout = setTimeout(expandContainer, 100); // Reduced timeout for faster response
         } 
         // If scrolling up, immediately collapse the container
         else if (scrollDirection === 'up') {
@@ -1553,8 +1536,13 @@ When a user provides their website URL:
       window.addEventListener('resize', function() {
         if (!isLargeScreen() && isExpanded) {
           collapseContainer();
+        } else if (isLargeScreen() && !isExpanded) {
+          storeOriginalHeight();
         }
       });
+      
+      // Initialize
+      storeOriginalHeight();
     }
     
     // Enhanced IP detection with fallbacks
@@ -1612,23 +1600,33 @@ When a user provides their website URL:
       const greeting = getGreeting(now.getHours());
       
       if (name) {
+        // Create greeting structure properly
+        greetingElement.innerHTML = '';
+        
         const greetingText = document.createElement('span');
         greetingText.textContent = greeting;
         
         const spacer = document.createTextNode(' ');
         const nameSpan = document.createElement('span');
         nameSpan.className = 'name-gradient';
+        nameSpan.textContent = name;
         const comma = document.createTextNode(',');
         
-        greetingElement.innerHTML = '';
         greetingElement.appendChild(greetingText);
         greetingElement.appendChild(spacer);
         greetingElement.appendChild(nameSpan);
         greetingElement.appendChild(comma);
         
+        // Apply typewriter effect only to the name
         await typeWriter(nameSpan, name, 120);
       } else {
         greetingElement.innerHTML = "<span class='name-gradient'>" + greeting + "</span>";
+      }
+      
+      // Remove the loader after greeting is set
+      const loader = greetingElement.querySelector('.loader');
+      if (loader) {
+        loader.remove();
       }
       
       const animations = ['weather-rain', 'weather-snow', 'weather-wind', 'weather-sunny'];
