@@ -181,33 +181,19 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-.subtitle {
-  font-size: 1.3rem;
-  max-width: 700px;
-  margin: 0 auto;
-  color: #d4d4d4;
-  font-weight: 300;
-  line-height: 1.6;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 10px 15px;
-  border-radius: 15px;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Add these media queries at the very end of your CSS file, just before the closing </style> tag */
-@media (min-width: 1200px) {
-  header .subtitle {
-    max-width: 85% !important;
-  }
-}
-
-@media (min-width: 1600px) {
-  header .subtitle {
-    max-width: 90% !important;
-  }
-}
-    
+    .subtitle {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #d4d4d4;
+      font-weight: 300;
+      line-height: 1.6; /* Reduced from 1.8 */
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 15px; /* Reduced from 12px 20px */
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
     /* How to use section */
     .how-to-use {
       background: rgba(20, 20, 30, 0.25);
